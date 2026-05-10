@@ -1,4 +1,4 @@
-ocal dfpwm = require("cc.audio.dfpwm")
+local dfpwm = require("cc.audio.dfpwm")
 local speaker = peripheral.find("speaker")
 
 local decoder = dfpwm.make_decoder()
