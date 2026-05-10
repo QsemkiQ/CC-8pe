@@ -1,18 +1,10 @@
+local dfpwm = require "cc.audio.dfpwm"
 local speaker = peripheral.find("speaker")
-if not speaker then
-    error("NO dio")
-end
 
-local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
-
-local file = io.open("1.dfpmu", "rb")
-if not file then
-    error("NO 1.dfpmu!")
+for input in io.lines("data/Zcapala.dfpwm", 16 * 1024) do
+  local decoded = decoder(input)
+  while not speaker.playAudio(decoded) do
+    os.pullEvent("speaker_audio_empty")
+  end
 end
-
-local data = file:read("*a")
-file:close()
-
-local audio_data = decoder(data)
-speaker.playAudio(audio_data)
